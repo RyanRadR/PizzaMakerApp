@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pizza Managing App - Owner</title>
+        <script>
+            function sanatizeData(event) {
+                const form = event.target;
+                const formElements = form.elements;
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.type === "text") {
+                        element.value = element.value.toLowerCase().replace(/[^a-z]/g, "");
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Pizza Managing App - Owner</h1>
+        <p>Toppings:</p>
+        <p>
+            {{toppings | join(", ")}}
+        </p>
+        <p>----------------------------------------------------</p>
+        <p>Topping commands:</p>
+        <p>----------------------------------------------------</p>
+        <p>Add:</p>
+        <form action="/add-topping" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Topping Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <button type="submit">Add Topping</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <p>Delete:</p>
+        <form action="/delete-topping" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Topping Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <button type="submit">Delete Topping</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <p>Update:</p>
+        <form action="/update-topping" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Topping Name:</label>
+            <input type="text" id="name" name="name" required><br>
+            <label for="new-name">New Topping Name:</label>
+            <input type="text" id="new-name" name="new-name" required><br>
+            <button type="submit">Update Topping</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <a href="/">
+            <button>Back to Home</button>
+        </a>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pizza Managing App - Chef</title>
+        <script>
+            function sanatizeData(event) {
+                const form = event.target;
+                const formElements = form.elements;
+                for (let i = 0; i < formElements.length; i++) {
+                    const element = formElements[i];
+                    if (element.type === "text") {
+                        element.value = element.value.toLowerCase().replace(/[^a-z]/g, "");
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Pizza Managing App - Chef</h1>
+        <p>Current Pizzas: </p>
+        <p>
+            {% for pizza in pizzas %}
+                <div>
+                    <p>&nbsp;&nbsp;Pizza Name: {{pizza["name"]}}</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Pizza Toppings: {{pizza["toppings"]}}</p>
+                </div>
+            {% endfor %}
+            <p>----------------------------------------------------</p>
+        </p>
+        <p>Pizza commands:</p>
+        <p>----------------------------------------------------</p>
+        <p>Create:</p>
+        <form action="/create-pizza" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Pizza Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            {% for topping in toppings %}
+            <div>
+                <label>
+                    <input type="checkbox" name="toppings" value="{{ topping }}"> {{ topping }}
+                </label><br>
+            </div>
+            {% endfor %}
+            <button type="submit">Create Pizza</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <p>Delete:</p>
+        <form action="/delete-pizza" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Pizza Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <button type="submit">Delete Pizza</button>
+        </form>       
+        <p>----------------------------------------------------</p>
+        <p>Update Name</p>
+        <form action="/update-pizza-name" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Pizza Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            <label for="new_name">New Pizza Name:</label><br>
+            <input type="text" id="new_name" name="new_name" required><br>
+            <button type="submit">Update Pizza Name</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <p>Update Toppings</p>
+        <form action="/update-pizza-toppings" method="POST" onsubmit="sanatizeData(event)">
+            <label for="name">Pizza Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+            {% for topping in toppings %}
+            <div>
+                <label>
+                    <input type="checkbox" name="toppings" value="{{topping}}"> {{topping}}
+                </label><br>
+            </div>
+            {% endfor %}
+            <button type="submit">Update Pizza Toppings</button>
+        </form>
+        <p>----------------------------------------------------</p>
+        <a href="/">
+            <button>Back to Home</button>
+        </a>
+    </body>
+</html>
